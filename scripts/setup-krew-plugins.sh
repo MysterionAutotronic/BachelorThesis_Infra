@@ -5,8 +5,8 @@ set -o pipefail
 set -o errexit
 
 PROJECT_ROOT="$(git rev-parse --show-toplevel)"
-export KREW_ROOT="${PROJECT_ROOT}/.krew"
-export PATH="${PROJECT_ROOT}/bin:${KREW_ROOT}/bin:$PATH"
+export KREW_ROOT="$HOME/.krew"
+export PATH="${HOME}/.krew/bin:$PATH"
 
 # ✅ Add kcp-dev Krew index
 if ! kubectl krew index list | grep -q 'github.com/kcp-dev/krew-index.git'; then

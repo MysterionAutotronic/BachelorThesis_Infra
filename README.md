@@ -31,3 +31,22 @@ sudo reboot
 ```sh
 ./scripts/start-kcp.sh
 ```
+
+## 6. Update Krew
+
+```sh
+./scripts/update-krew.sh
+```
+
+## 7. Setup Krew plugins
+
+```sh
+./scripts/setup-krew-plugins.sh
+```
+
+## 8. Add to PATH
+
+```sh
+source ./scripts/path.sh
+```
+
