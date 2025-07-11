@@ -14,8 +14,20 @@ sudo ./scripts/install-deps.sh
 sudo reboot
 ```
 
-## 2. Clone Repos
+## 3. Clone Repos
 
 ```sh
 ./scripts/clone-repos.sh
+```
+
+## 4. Setup kcp
+
+```sh
+./scripts/setup-kcp.sh
+```
+
+## 5. Start kcp
+
+```sh
+./scripts/start-kcp.sh
 ```
