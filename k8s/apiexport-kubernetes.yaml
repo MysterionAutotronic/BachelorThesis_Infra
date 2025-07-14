@@ -1,0 +1,15 @@
+apiVersion: apis.kcp.io/v1alpha1
+kind: APIExport
+metadata:
+  name: kubernetes
+spec:
+  latestResourceSchemas:
+    - workload.workloads.kcp.io-v1alpha1
+    - pods.core.kcp.io-v1
+    - services.core.kcp.io-v1
+    - deployments.apps.kcp.io-v1
+    - replicasets.apps.kcp.io-v1
+  permissionClaims:
+    - group: ""
+      resource: namespaces
+      all: true

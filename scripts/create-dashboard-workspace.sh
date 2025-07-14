@@ -7,7 +7,7 @@ export PATH="$HOME/Dokumente/BachelorThesis_Infra/bin:$PATH"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 # Workspace name
-WORKSPACE_NAME="root-dashboard"
+WORKSPACE_NAME="dashboard"
 
 echo "📦 Creating root workspace: $WORKSPACE_NAME..."
 
@@ -15,9 +15,11 @@ echo "📦 Creating root workspace: $WORKSPACE_NAME..."
 export KUBECONFIG="$(pwd)/.kcp/admin.kubeconfig"
 
 # Create the workspace
-kubectl config use-context system:admin
-kubectl create-workspace "$WORKSPACE_NAME" --type root
+kubectl ws root
+kubectl create-workspace "$WORKSPACE_NAME"
+kubectl ws use "$WORKSPACE_NAME"
 
 echo "✅ Workspace '$WORKSPACE_NAME' created and entered."
+echo "Current workspace: $(kubectl ws current)"
 echo "📂 Current workspace tree:"
 kubectl ws tree
