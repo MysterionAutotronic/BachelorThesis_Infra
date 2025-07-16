@@ -50,3 +50,82 @@ sudo reboot
 source ./scripts/path.sh
 ```
 
+## Helpful commands:
+
+### Workspaces
+
+Show workspace structure as tree:
+```sh
+kubectl ws tree
+```
+
+Show all workspaces and URLs:
+```sh
+kubectl get workspaces
+```
+
+Show current workspace:
+```sh
+kubectl ws current
+```
+
+Use a certain workspace:
+```sh
+kubectl ws use :root:<NAME>
+```
+
+Get clusters and context:
+```sh
+kubectl config view --minify
+```
+
+Check workspace status:
+```sh
+kubectl get workspaces <NAME_WITHOUT_PARENT> -o jsonpath='{.status.phase}{"\n"}'
+```
+
+Show detailed workspace status:
+```sh
+kubectl get workspaces <NAME_WITHOUT_PARENT> -o yaml | grep -A4 "status:"          
+```
+
+### RBAC
+
+Get current user:
+```sh
+kubectl config view --minify -o jsonpath='{.users[0].name}'
+```
+
+### API binding
+
+Check privileges to bind API export:
+```sh
+kubectl auth can-i bind apiexports.apis.kcp.io/content/:root:<NAME>
+```
+
+Get FQN for apibinding:
+```sh
+kubectl get apiexport <APIBINDING> -o jsonpath='{.metadata.annotations.kcp.io/path}:{.metadata.name}{"\n"}'
+```
+
+Get binding status for apibinding:
+```sh
+kubectl get apibinding <APIBINDING> -o=jsonpath='{.status.phase}{"\n"}'
+```
+
+Get all binding conditions for apibinding:
+```sh
+kubectl get apibinding kubernetes -o=jsonpath='{range .status.conditions[*]}{.type} {.status} {.reason} {.message}{"\n"}{end}'
+```
+
+Delete apibinding:
+```sh
+kubectl delete apibinding <APIBINDING> --ignore-not-found
+```
+
+## API Resources
+
+Show all available API resources inside a workspace:
+```sh
+kubectl api-resources
+```
