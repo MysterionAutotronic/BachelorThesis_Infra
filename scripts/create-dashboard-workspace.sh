@@ -6,20 +6,30 @@ set -euo pipefail
 export PATH="$HOME/Dokumente/BachelorThesis_Infra/bin:$PATH"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
-# Workspace name
-WORKSPACE_NAME="dashboard"
-
-echo "📦 Creating root workspace: $WORKSPACE_NAME..."
-
 # Set KUBECONFIG
 export KUBECONFIG="$(pwd)/.kcp/admin.kubeconfig"
 
 # Create the workspace
-kubectl ws root
-kubectl create-workspace "$WORKSPACE_NAME"
-kubectl ws use "$WORKSPACE_NAME"
-
-echo "✅ Workspace '$WORKSPACE_NAME' created and entered."
+kubectl ws use :root
+kubectl create-workspace dashboard
+kubectl ws use dashboard
+echo "✅ Workspace 'dashboard' created and entered."
 echo "Current workspace: $(kubectl ws current)"
-echo "📂 Current workspace tree:"
-kubectl ws tree
+
+# Create child workspace "cluster"
+kubectl ws use :root:dashboard
+kubectl apply -f k8s/workspaces/root-dashboard-cluster.yaml
+
+# :root RBAC
+kubectl ws use :root
+kubectl apply -f k8s/rbac/root.yaml
+
+# :root:dashboard binding
+kubectl ws use :root:dashboard
+kubectl kcp bind apiexport root:tenancy.kcp.io --name tenancy
+
+# :root:dashboard:cluster binding
+kubectl ws use :root:dashboard:cluster
+kubectl delete apibinding kubernetes --ignore-not-found
+kubectl kcp bind apiexport root:kubernetes --name kubernetes --accept-permission-claim namespaces.core
+

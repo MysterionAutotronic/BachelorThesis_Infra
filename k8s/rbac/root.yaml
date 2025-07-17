@@ -1,0 +1,61 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: allow-root-tenancy-binding
+rules:
+  - apiGroups: ["apis.kcp.io"]
+    resources: ["apiexports/content"]
+    verbs: ["bind"]
+    resourceNames: ["root:tenancy.kcp.io"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: shard-admin-can-bind-tenancy
+subjects:
+  - kind: User
+    name: shard-admin
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: allow-root-tenancy-binding
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: allow-root-k8s-export-binding
+rules:
+- apiGroups: ["apis.kcp.io"]
+  resources: ["apiexports"]
+  verbs: ["get"]
+- apiGroups: ["apis.kcp.io"]
+  resources: ["apiexports/content"]
+  verbs: ["bind"]
+  resourceNames: ["kubernetes"]
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: all-authenticated-can-bind-root-k8s
+subjects:
+- kind: Group
+  name: system:authenticated
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: allow-root-k8s-export-binding
+  apiGroup: rbac.authorization.k8s.io
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: binding-root-dashboard-cluster-can-access-root
+subjects:
+- kind: Group
+  name: apis.kcp.io:binding:root:dashboard:cluster
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: system:kcp:workspace:access
+  apiGroup: rbac.authorization.k8s.io

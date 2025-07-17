@@ -1,0 +1,9 @@
+apiVersion: tenancy.kcp.io/v1alpha1
+kind: Workspace
+metadata:
+  name: cluster
+  annotations:
+    scheduling.kcp.io/parent-workspace: root:dashboard
+spec:
+  type:
+    name: universal
