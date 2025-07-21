@@ -7,11 +7,14 @@ sudo apt update
 sudo apt upgrade -y
 
 echo "📦 Installing core tools..."
-sudo apt install -y curl git ca-certificates gnupg lsb-release unzip
+sudo apt install -y curl git ca-certificates gnupg lsb-release unzip build-essential 
 
 echo "🧰 Installing Node.js + npm (LTS)..."
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt install -y nodejs
+
+echo "📦 Installing Go..."
+sudo apt install -y golang
 
 echo "🐳 Installing Docker..."
 # Add Docker’s official GPG key
