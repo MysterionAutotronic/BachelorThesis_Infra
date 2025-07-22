@@ -1,0 +1,12 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: dashboard
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 80
+        hostPort: 8080 # 80 might be in use by another service
+        protocol: TCP
+      - containerPort: 443
+        hostPort: 8443
+        protocol: TCP
