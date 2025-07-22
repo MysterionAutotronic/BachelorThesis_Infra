@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: dashboard-ingress
+  name: dashboard-fe-ingress
   namespace: default
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$1
@@ -16,5 +16,24 @@ spec:
             backend:
               service:
                 name: dashboard-fe
+                port:
+                  number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dashboard-be-ingress
+  namespace: default
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: api.dashboard.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dashboard-be
                 port:
                   number: 80
