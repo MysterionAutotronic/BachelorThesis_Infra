@@ -50,6 +50,18 @@ sudo reboot
 source ./scripts/path.sh
 ```
 
+# 9. Setup TMC
+
+```sh
+./scripts/setup-tmc.sh
+```
+
+# 10. Add to PATH again if necessary
+
+```sh
+source ./scripts/path.sh
+```
+
 ## Helpful commands:
 
 ### Workspaces
@@ -121,6 +133,11 @@ kubectl get apibinding kubernetes -o=jsonpath='{range .status.conditions[*]}{.ty
 Delete apibinding:
 ```sh
 kubectl delete apibinding <APIBINDING> --ignore-not-found
+```
+
+Show role bindings
+```sh
+kubectl get clusterrolebinding
 ```
 
 ## API Resources
