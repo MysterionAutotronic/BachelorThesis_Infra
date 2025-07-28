@@ -146,3 +146,11 @@ Show all available API resources inside a workspace:
 ```sh
 kubectl api-resources
 ```
+
+## Debug Pod
+
+```sh
+kubectl apply -f ./k8s/deployments/debug.yaml
+kubectl get pods debug # wait for ready
+kubectl exec -it debug -- bash #enter
+```

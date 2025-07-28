@@ -29,7 +29,7 @@ kubectl config use-context kind-dashboard
 kubectl apply -f ./k8s/deployments/dashboard-be.yaml
 
 # Build dashboardFE docker image
-./scripts/build/dashboardFE.sh http://api.dashboard.local:8080
+./scripts/build/dashboardFE.sh http://dashboard-be.default.svc.cluster.local/config
 
 # Load image to kind cluster
 kind load docker-image dashboard-fe:latest --name dashboard
