@@ -20,6 +20,9 @@ spec:
           imagePullPolicy: Never
           ports:
             - containerPort: 3000
+          env:
+            - name: CONFIG_ENDPOINT
+              value: http://dashboard-be.default.svc.cluster.local/config
 
 ---
 apiVersion: v1
