@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tenant-be
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tenant-be
+  template:
+    metadata:
+      labels:
+        app: tenant-be
+    spec:
+      containers:
+        - name: tenant-be
+          image: tenant-be:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tenant-be
+spec:
+  selector:
+    app: tenant-be
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: NodePort
