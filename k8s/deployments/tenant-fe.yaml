@@ -1,0 +1,38 @@
+metadata:
+  name: tenant-fe
+  labels:
+    app: tenant-fe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tenant-fe
+  template:
+    metadata:
+      labels:
+        app: tenant-fe
+    spec:
+      containers:
+        - name: tenant-fe
+          image: tenant-fe:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
+          env:
+            - name: CONFIG_ENDPOINT
+              value: http://tenant-be.default.svc.cluster.local/config
+            - name: CRASH_ENDPOINT
+              value: http://tenant-be.default.svc.cluster.local/crash
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tenant-fe
+spec:
+  selector:
+    app: tenant-fe
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: NodePort
