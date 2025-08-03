@@ -19,9 +19,9 @@ spec:
           ports:
             - containerPort: 3000
           env:
-            - name: CONFIG_ENDPOINT
+            - name: NEXT_PUBLIC_CONFIG_ENDPOINT
               value: http://tenant-be.default.svc.cluster.local/config
-            - name: CRASH_ENDPOINT
+            - name: NEXT_PUBLIC_CRASH_ENDPOINT
               value: http://tenant-be.default.svc.cluster.local/crash
 ---
 apiVersion: v1
