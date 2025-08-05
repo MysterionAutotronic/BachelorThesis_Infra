@@ -48,3 +48,6 @@ kind load docker-image tenant-fe:latest --name tenant-${TENANT_ID}
 
 # Apply deployment
 kubectl apply -f ./k8s/deployments/tenant-fe.yaml
+
+# Create CRD for the tenant
+./scripts/CRDs/create-tenant-x-CRD.sh "${TENANT_ID}"
