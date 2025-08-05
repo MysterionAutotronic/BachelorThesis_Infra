@@ -3,3 +3,4 @@
 /.kubeconfigs
 /bin
 /.krew
+/k8s/CRDs/*
