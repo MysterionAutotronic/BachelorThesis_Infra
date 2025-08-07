@@ -4,3 +4,4 @@
 /bin
 /.krew
 /k8s/CRDs/*
+/kind-dashboard.yaml
