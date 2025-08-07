@@ -53,14 +53,13 @@ kubectl apply -f ./k8s/roleBinding/tmc-role-binding.yaml
 
 # Register sync target
 kubectl config use-context root
-kubectl tmc ws use root
+kubectl tmc ws use root:dashboard
 kubectl tmc workload sync kind-dashboard \
     --syncer-image ghcr.io/kcp-dev/contrib-tmc/syncer:latest \
     --output-file kind-dashboard.yaml
 kubectl config use-context kind-dashboard
 kubectl apply -f kind-dashboard.yaml
-kubectl tmc bind compute root:dashboard
-
-# (Attempted fix)
 kubectl config use-context root
-kubectl apply -f ./k8s/kcp-crds/apis.kcp.io_apibindings.yaml
+kubectl tmc bind compute root:dashboard
+kubectl ws use :root:dashboard
+kubectl apply -f ./k8s/apibindings/standard-bindings.yaml

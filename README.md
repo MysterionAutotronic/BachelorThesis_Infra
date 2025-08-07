@@ -26,40 +26,58 @@ sudo reboot
 ./scripts/setup-kcp.sh
 ```
 
-## 5. Start kcp
-
-```sh
-./scripts/start-kcp.sh
-```
-
-## 6. Update Krew
+## 5. Update Krew
 
 ```sh
 ./scripts/update-krew.sh
 ```
 
-## 7. Setup Krew plugins
+## 6. Setup Krew plugins
 
 ```sh
 ./scripts/setup-krew-plugins.sh
 ```
 
-## 8. Add to PATH
+## 7. Add to PATH
 
 ```sh
 source ./scripts/path.sh
 ```
 
-# 9. Setup TMC
+# 8. Setup TMC
 
 ```sh
 ./scripts/setup-tmc.sh
 ```
 
-# 10. Add to PATH again if necessary
+# 9. Add to PATH again if necessary
 
 ```sh
 source ./scripts/path.sh
+```
+
+# 10. Start TMC-KCP
+
+```sh
+./scripts/start-tmc-kcp.sh
+```
+
+# 11. Create dashboard
+
+```sh
+./scripts/create-dashboard-workspace.sh
+```
+
+# 12. Modify hosts
+
+```sh
+./scripts/add-to-hosts.sh
+```
+
+# 13. Manually create tenant-x
+
+```sh
+./scripts/create-tenant-x-workspace.sh
 ```
 
 ## Helpful commands:
@@ -153,4 +171,30 @@ kubectl api-resources
 kubectl apply -f ./k8s/deployments/debug.yaml
 kubectl get pods debug # wait for ready
 kubectl exec -it debug -- bash #enter
+```
+
+## Context
+
+Show contexts:
+```sh
+kubectl config get-contexts
+```
+
+Switch context:
+```sh
+kubectl config use-context <NAME>
+```
+
+## TMC
+
+Create SyncTarget:
+```sh
+kubectl tmc workload sync <NAME> \
+    --syncer-image ghcr.io/kcp-dev/contrib-tmc/syncer:latest \
+    --output-file kind-dashboard.yaml
+```
+
+Bind compute resources:
+```sh
+kubectl tmc bind compute <WORKSPACE>
 ```
