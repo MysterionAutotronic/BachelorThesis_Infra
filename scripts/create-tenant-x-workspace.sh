@@ -51,3 +51,6 @@ kubectl apply -f ./k8s/deployments/tenant-fe.yaml
 
 # Create CRD for the tenant
 ./scripts/CRDs/create-tenant-x-CRD.sh "${TENANT_ID}"
+
+# Create role binding and service account for tenant
+kubectl apply -f ./k8s/roleBinding/tmc-role-binding.yaml

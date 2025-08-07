@@ -47,3 +47,20 @@ kubectl apply -f ./k8s/deployments/dashboard-fe.yaml
 # sudo bash ./scripts/add-to-hosts.sh 127.0.0.1 dashboard.local api.dashboard.local
 # kubectl apply -f ./k8s/ingress/dashboard-ingress.yaml
 # sudo iptables -t nat -A OUTPUT -p tcp --dport 80 -d 127.0.0.1 -j REDIRECT --to-port 30863
+
+# Create role binding and service account for dashboard
+kubectl apply -f ./k8s/roleBinding/tmc-role-binding.yaml
+
+# Register sync target
+kubectl config use-context root
+kubectl tmc ws use root
+kubectl tmc workload sync kind-dashboard \
+    --syncer-image ghcr.io/kcp-dev/contrib-tmc/syncer:latest \
+    --output-file kind-dashboard.yaml
+kubectl config use-context kind-dashboard
+kubectl apply -f kind-dashboard.yaml
+kubectl tmc bind compute root:dashboard
+
+# (Attempted fix)
+kubectl config use-context root
+kubectl apply -f ./k8s/kcp-crds/apis.kcp.io_apibindings.yaml
